@@ -9,20 +9,33 @@
 <body>
     <div class="container">
         <header>
-            <h1>🏥 Nhận diện thực thể trong lĩnh vực y tế</h1>
+            <div class="header-content">
+                <h1>Nhận diện thực thể trong lĩnh vực y tế</h1>
+                <svg class="pet pet-header" viewBox="0 0 100 100" onclick="togglePet(this)">
+                    <circle cx="50" cy="50" r="35" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
+                    <!-- Ears -->
+                    <circle cx="30" cy="25" r="12" fill="#333"/>
+                    <circle cx="70" cy="25" r="12" fill="#333"/>
+                    <!-- Eyes -->
+                    <circle cx="40" cy="45" r="6" fill="#333"/>
+                    <circle cx="60" cy="45" r="6" fill="#333"/>
+                    <!-- Nose -->
+                    <circle cx="50" cy="55" r="4" fill="#333"/>
+                </svg>
+            </div>
             <p class="subtitle">So sánh PhoBERT (Deep Learning) và CRF (Machine Learning)</p>
         </header>
 
         <div class="model-card" style="margin-bottom: 30px;">
             <div class="model-header">
-                 <div class="model-title">📝 Nhập văn bản</div>
+                 <div class="model-title">Nhập văn bản</div>
             </div>
             <div class="input-section">
                 <label for="input-shared">Nhập văn bản y tế tại đây:</label>
                 <textarea id="input-shared" placeholder="Ví dụ: Bệnh nhân nhập viện vì đau ngực dữ dội và khó thở..." rows="6"></textarea>
             </div>
             <div class="button-group" style="margin-bottom: 0;">
-                <button class="clear-btn" onclick="clearAll()" style="flex: 0.5;">🗑️ Xóa văn bản</button>
+                <button class="clear-btn" onclick="clearAll()">Xóa văn bản</button>
             </div>
         </div>
 
@@ -33,7 +46,7 @@
                     <div class="model-badge">Deep Learning</div>
                 </div>
                 <div class="button-group">
-                    <button class="analyze-btn" onclick="analyzeText('linear')">🔍 Phân tích (Linear)</button>
+                    <button class="analyze-btn" onclick="analyzeText('linear')">Phân tích (Linear)</button>
                 </div>
                 <div class="results-section" id="results-linear">
                     <div class="results-title">Kết quả phân tích:</div>
@@ -47,7 +60,7 @@
                     <div class="model-badge">Machine Learning</div>
                 </div>
                 <div class="button-group">
-                    <button class="analyze-btn" onclick="analyzeText('crf')">🔍 Phân tích (CRF)</button>
+                    <button class="analyze-btn" onclick="analyzeText('crf')">Phân tích (CRF)</button>
                 </div>
                 <div class="results-section" id="results-crf">
                     <div class="results-title">Kết quả phân tích:</div>
@@ -57,35 +70,68 @@
         </div>
 
         <div class="legend">
-            <div class="legend-title">📋 Chú thích các loại thực thể</div>
+            <div class="legend-title">Chú thích các loại thực thể</div>
             <div class="legend-grid">
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e6dc8a; border: 1px solid #fbc02d;"></div>
+                    <div class="legend-color" style="background-color: #fff9c4; border: 1px solid #fbc02d;"></div>
                     <span>Triệu chứng bệnh</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #2fce6c; border: 1px solid #34cc40;"></div>
+                    <div class="legend-color" style="background-color: #c8e6c9; border: 1px solid #34cc40;"></div>
                     <span>Tên bệnh</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #2196f3; border: 1px solid #1976d2;"></div>
+                    <div class="legend-color" style="background-color: #bbdefb; border: 1px solid #1976d2;"></div>
                     <span>Nguyên nhân bệnh</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #9c27b0; border: 1px solid #7b1fa2;"></div>
+                    <div class="legend-color" style="background-color: #e1bee7; border: 1px solid #7b1fa2;"></div>
                     <span>Biện pháp chẩn đoán</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e91e63; border: 1px solid #c2185b;"></div>
+                    <div class="legend-color" style="background-color: #f8bbd0; border: 1px solid #c2185b;"></div>
                     <span>Biện pháp điều trị</span>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="pets-container">
+        <svg class="pet pet-monkey" viewBox="0 0 100 100" onclick="togglePet(this)">
+            <circle cx="50" cy="50" r="35" fill="#d4a574" stroke="#333" stroke-width="2"/>
+            <!-- Ears -->
+            <circle cx="30" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
+            <circle cx="70" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
+            <!-- Eyes -->
+            <circle cx="40" cy="45" r="5" fill="#333"/>
+            <circle cx="60" cy="45" r="5" fill="#333"/>
+            <!-- Nose -->
+            <circle cx="50" cy="55" r="3" fill="#333"/>
+            <!-- Smile -->
+            <path d="M 45 60 Q 50 63 55 60" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <svg class="pet pet-monkey" viewBox="0 0 100 100" onclick="togglePet(this)">
+            <circle cx="50" cy="50" r="35" fill="#d4a574" stroke="#333" stroke-width="2"/>
+            <!-- Ears -->
+            <circle cx="30" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
+            <circle cx="70" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
+            <!-- Eyes -->
+            <circle cx="40" cy="45" r="5" fill="#333"/>
+            <circle cx="60" cy="45" r="5" fill="#333"/>
+            <!-- Nose -->
+            <circle cx="50" cy="55" r="3" fill="#333"/>
+            <!-- Smile -->
+            <path d="M 45 60 Q 50 63 55 60" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
     <script>
         // API URL không đổi
         const API_URL = 'http://127.0.0.1:8001';
+
+        function togglePet(petElement) {
+            petElement.classList.toggle('pet-idle');
+        }
 
         async function analyzeText(modelType) {
             const input = document.getElementById('input-shared'); 

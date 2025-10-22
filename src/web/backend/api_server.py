@@ -9,9 +9,14 @@ from src.web.backend.inference import ViMedNERInference
 import os
 from dotenv import load_dotenv
 
+# Load biến môi trường từ file .env
+load_dotenv()
+
 # --- 1. TẢI MODEL PhoBERT + Linear ---
 print("Đang khởi tạo và tải model PhoBERT + Linear...")
-MODEL_PATH = "models/best_model"
+MODEL_PATH = os.getenv("PHOBERT_MODEL_PATH", "result/phobert/best_models")
+print(f"Đường dẫn model PhoBERT: {MODEL_PATH}")
+
 try:
     inference_engine = ViMedNERInference(model_path=MODEL_PATH)
     print("--- Tải model PhoBERT + Linear thành công! ---")
@@ -23,6 +28,9 @@ except Exception as e:
 print("Đang khởi tạo và tải model CRF (.pkl)...")
 CRF_PREPROCESSOR_PATH = os.getenv("CRF_PREPROCESSOR_PATH")
 CRF_MODEL_PATH = os.getenv("CRF_MODEL_PATH")
+
+print(f"Đường dẫn CRF preprocessor: {CRF_PREPROCESSOR_PATH}")
+print(f"Đường dẫn CRF model: {CRF_MODEL_PATH}")
 
 try:
     # Tải file preprocessor (là một DICT)
@@ -39,8 +47,7 @@ except Exception as e:
     crf_preprocessor_data = None
     crf_model = None
 
-# --- 3. SAO CHÉP HÀM EXTRACT_FEATURES TỪ CODE CỦA BẠN ---
-# Đây chính là hàm trích xuất đặc trưng mà server đang thiếu
+# --- 3. HÀM EXTRACT_FEATURES ---
 def extract_features(sentence: List[str]) -> List[Dict[str, Any]]:
     """Trích xuất đặc trưng cho từng từ (giống lúc train)."""
     features = []
@@ -49,7 +56,7 @@ def extract_features(sentence: List[str]) -> List[Dict[str, Any]]:
             'word': word.lower(),
             'is_first': i == 0,
             'is_last': i == len(sentence) - 1,
-            'is_capitalized': word[0].upper() == word[0],
+            'is_capitalized': word[0].upper() == word[0] if word else False,
             'is_all_caps': word.upper() == word,
             'is_all_lower': word.lower() == word,
             'prefix_1': word[:1],
@@ -61,7 +68,6 @@ def extract_features(sentence: List[str]) -> List[Dict[str, Any]]:
             'has_digit': bool(re.search(r'\d', word)),
             'has_hyphen': '-' in word,
             'word_length': len(word),
-            # (Bạn có thể thêm các feature khác từ file code của bạn nếu cần)
             'prev_word': sentence[i - 1].lower() if i > 0 else '<START>',
             'next_word': sentence[i + 1].lower() if i < len(sentence) - 1 else '<END>',
         }
@@ -86,22 +92,26 @@ app.add_middleware(
 class TextInput(BaseModel):
     text: str
 
-# --- 5. TẠO API ENDPOINT CHO PhoBERT + Linear ---
-@app.post("/analyze-linear", response_model=List[Tuple[str, str]])
+class ErrorResponse(BaseModel):
+    error: str
+
+# --- 5. API ENDPOINT CHO PhoBERT + Linear ---
+@app.post("/analyze-linear")
 async def analyze_linear_endpoint(request: TextInput):
     if not inference_engine:
-        return {"error": "Model PhoBERT + Linear chưa được tải."}, 500
+        return {"error": "Model PhoBERT + Linear chưa được tải."}
     try:
         predictions = inference_engine.predict_sentence(request.text)
         return predictions 
     except Exception as e:
-        return {"error": str(e)}, 500
+        print(f"Lỗi khi dự đoán PhoBERT: {e}")
+        return {"error": str(e)}
 
-# --- 6. TẠO ENDPOINT MỚI CHO MODEL CRF (.pkl) ---
-@app.post("/analyze-crf", response_model=List[Tuple[str, str]])
+# --- 6. API ENDPOINT CHO MODEL CRF ---
+@app.post("/analyze-crf")
 async def analyze_crf_endpoint(request: TextInput):
     if not crf_preprocessor_data or not crf_model:
-        return {"error": "Model CRF (.pkl) chưa được tải."}, 500
+        return {"error": "Model CRF (.pkl) chưa được tải."}
 
     try:
         # 1. Tách câu thành các từ
@@ -109,23 +119,42 @@ async def analyze_crf_endpoint(request: TextInput):
         if not words:
             return []
 
-        # 2. Áp dụng HÀM trích xuất đặc trưng (ĐÃ SỬA)
+        # 2. Trích xuất đặc trưng
         features = extract_features(words)
         
         # 3. Dự đoán bằng model CRF
-        # Gói 'features' vào 1 list vì model mong đợi 1 list các câu
         labels = crf_model.predict([features])
         
         # 4. Lấy kết quả
-        predicted_labels = labels[0] # Lấy list nhãn của câu đầu tiên
+        predicted_labels = labels[0]
 
         # 5. Gộp từ và nhãn lại
         return list(zip(words, predicted_labels))
 
     except Exception as e:
         print(f"Lỗi khi dự đoán CRF: {e}") 
-        return {"error": str(e)}, 500
+        return {"error": str(e)}
 
 @app.get("/")
 def read_root():
-    return {"message": "Chào mừng đến với ViMedNER API. Các endpoints: /analyze-linear, /analyze-crf"}
+    return {
+        "message": "Chào mừng đến với ViMedNER API",
+        "endpoints": {
+            "/analyze-linear": "Phân tích với PhoBERT",
+            "/analyze-crf": "Phân tích với CRF"
+        },
+        "status": {
+            "phobert": "ready" if inference_engine else "error",
+            "crf": "ready" if (crf_model and crf_preprocessor_data) else "error"
+        }
+    }
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "models": {
+            "phobert": inference_engine is not None,
+            "crf": crf_model is not None and crf_preprocessor_data is not None
+        }
+    }
