@@ -1,0 +1,15 @@
+transformers
+torch
+sklearn-crfsuite
+flask
+seaborn
+matplotlib
+pandas
+underthesea
+pytorch_crf
+fastapi
+pydantic
+pyvi
+python-dotenv
+fastapi
+uvicorn[standard]
