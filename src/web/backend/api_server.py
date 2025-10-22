@@ -8,12 +8,9 @@ import re
 from src.web.backend.inference import ViMedNERInference
 import os
 from dotenv import load_dotenv
-
-# Load biến môi trường từ file .env
 load_dotenv()
 
-# --- 1. TẢI MODEL PhoBERT + Linear ---
-print("Đang khởi tạo và tải model PhoBERT + Linear...")
+print("Đang khởi tạo và tải model PhoBERT")
 MODEL_PATH = os.getenv("PHOBERT_MODEL_PATH", "result/phobert/best_models")
 print(f"Đường dẫn model PhoBERT: {MODEL_PATH}")
 
@@ -24,30 +21,23 @@ except Exception as e:
     print(f"!!! LỖI: Không thể tải model PhoBERT từ '{MODEL_PATH}'. Lỗi: {e}")
     inference_engine = None 
 
-# --- 2. TẢI MODEL CRF (CỔ ĐIỂN) ---
-print("Đang khởi tạo và tải model CRF (.pkl)...")
+print("Đang khởi tạo và tải model CRF")
 CRF_PREPROCESSOR_PATH = os.getenv("CRF_PREPROCESSOR_PATH")
 CRF_MODEL_PATH = os.getenv("CRF_MODEL_PATH")
-
 print(f"Đường dẫn CRF preprocessor: {CRF_PREPROCESSOR_PATH}")
 print(f"Đường dẫn CRF model: {CRF_MODEL_PATH}")
 
 try:
-    # Tải file preprocessor (là một DICT)
     with open(CRF_PREPROCESSOR_PATH, 'rb') as f:
         crf_preprocessor_data = pickle.load(f)
-    
-    # Tải file model (là model CRF đã train)
     with open(CRF_MODEL_PATH, 'rb') as f:
-        crf_model = pickle.load(f)
-        
+        crf_model = pickle.load(f)    
     print(f"--- Tải model CRF (.pkl) từ '{CRF_MODEL_PATH}' thành công! ---")
 except Exception as e:
     print(f"!!! LỖI: Không thể tải 2 file CRF (.pkl). Lỗi: {e}")
     crf_preprocessor_data = None
     crf_model = None
 
-# --- 3. HÀM EXTRACT_FEATURES ---
 def extract_features(sentence: List[str]) -> List[Dict[str, Any]]:
     """Trích xuất đặc trưng cho từng từ (giống lúc train)."""
     features = []
@@ -74,10 +64,9 @@ def extract_features(sentence: List[str]) -> List[Dict[str, Any]]:
         features.append(word_features)
     return features
 
-# --- 4. KHỞI TẠO API SERVER ---
 app = FastAPI(
     title="ViMedNER API",
-    description="API cho mô hình NER (PhoBERT + Linear VÀ CRF Cổ điển)",
+    description="API cho mô hình NER (PhoBERT VÀ CRF)",
     version="1.0.0"
 )
 
@@ -95,7 +84,7 @@ class TextInput(BaseModel):
 class ErrorResponse(BaseModel):
     error: str
 
-# --- 5. API ENDPOINT CHO PhoBERT + Linear ---
+# --- API ENDPOINT CHO PhoBERT + Linear ---
 @app.post("/analyze-linear")
 async def analyze_linear_endpoint(request: TextInput):
     if not inference_engine:
@@ -107,7 +96,7 @@ async def analyze_linear_endpoint(request: TextInput):
         print(f"Lỗi khi dự đoán PhoBERT: {e}")
         return {"error": str(e)}
 
-# --- 6. API ENDPOINT CHO MODEL CRF ---
+# --- API ENDPOINT CHO MODEL CRF ---
 @app.post("/analyze-crf")
 async def analyze_crf_endpoint(request: TextInput):
     if not crf_preprocessor_data or not crf_model:
