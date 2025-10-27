@@ -261,28 +261,28 @@ button {
 
 /* 2. Tên bệnh (Xanh lá) */
 .entity-ten_benh {
-  background-color: #c8e6c9;
+  background-color: #0fe916;
   border: 1px solid #34cc40;
   color: #1b5e20;
 }
 
 /* 3. Nguyên nhân bệnh (Xanh dương) */
 .entity-nguyen_nhan_benh {
-  background-color: #bbdefb;
+  background-color: #0e89ec;
   border: 1px solid #1976d2;
   color: #0d47a1;
 }
 
 /* 4. Biện pháp chẩn đoán (Tím) */
 .entity-bien_phap_chan_doan {
-  background-color: #e1bee7;
+  background-color: #c314e2;
   border: 1px solid #7b1fa2;
   color: #4a148c;
 }
 
 /* 5. Biện pháp điều trị (Hồng) */
 .entity-bien_phap_dieu_tri {
-  background-color: #f8bbd0;
+  background-color: #f30256;
   border: 1px solid #c2185b;
   color: #880e4f;
 }
