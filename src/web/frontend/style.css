@@ -8,46 +8,51 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
   background: #ffffff;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 12px;
   color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1900px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Minimalist header - removed text-shadow, simplified styling */
+/* Minimized header with reduced padding and font sizes */
 header {
   text-align: center;
-  margin-bottom: 50px;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
 }
 
 h1 {
-  font-size: 2em;
-  margin-bottom: 12px;
+  font-size: 1.2em;
+  margin-bottom: 4px;
   font-weight: 500;
   letter-spacing: -0.5px;
 }
 
 .subtitle {
-  font-size: 0.95em;
+  font-size: 0.75em;
   color: #666666;
   font-weight: 400;
 }
 
-/* Added header content layout for pet in header */
 .header-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
-/* Pet styling - minimalist geometric design */
 .pet {
   width: 60px;
   height: 60px;
@@ -56,11 +61,10 @@ h1 {
 }
 
 .pet-header {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
 }
 
-/* Pet bounce animation */
 @keyframes bounce {
   0%,
   100% {
@@ -71,7 +75,6 @@ h1 {
   }
 }
 
-/* Pet blink animation */
 @keyframes blink {
   0%,
   100% {
@@ -82,46 +85,64 @@ h1 {
   }
 }
 
-/* Default pet animation - bounce and blink */
 .pet {
   animation: bounce 1.5s ease-in-out infinite, blink 3s ease-in-out infinite;
 }
 
-/* Pet idle state - stop animation on click */
 .pet.pet-idle {
   animation: none;
   opacity: 1;
 }
 
-/* Pets container - fixed position at bottom right */
 .pets-container {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 12px;
+  right: 12px;
   display: flex;
-  gap: 20px;
+  gap: 10px;
   z-index: 100;
 }
 
 .pet-monkey {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
+}
+
+/* Optimized main-content layout with reduced gaps */
+.main-content {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+.input-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 .models-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  margin-bottom: 40px;
+  gap: 8px;
+  min-height: 0;
 }
 
-/* Minimalist card - removed shadow, simplified border */
 .model-card {
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  padding: 30px;
+  padding: 15px;
   transition: border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 .model-card:hover {
@@ -132,48 +153,51 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
 }
 
 .model-title {
-  font-size: 1.2em;
+  font-size: 0.95em;
   color: #333333;
   font-weight: 500;
 }
 
-/* Minimalist badge - removed gradient, simplified styling */
 .model-badge {
   background: #f5f5f5;
   color: #666666;
-  padding: 6px 12px;
+  padding: 4px 8px;
   border-radius: 3px;
-  font-size: 0.85em;
+  font-size: 0.75em;
   font-weight: 500;
 }
 
 .input-section {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: #333333;
   font-weight: 500;
-  font-size: 0.95em;
+  font-size: 0.85em;
 }
 
 textarea {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  font-size: 0.95em;
+  font-size: 0.85em;
   font-family: inherit;
-  resize: vertical;
-  min-height: 120px;
+  resize: none;
+  flex: 1;
   transition: border-color 0.2s;
   background: #ffffff;
 }
@@ -185,16 +209,17 @@ textarea:focus {
 
 .button-group {
   display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
 }
 
 button {
   flex: 1;
-  padding: 11px 20px;
+  padding: 7px 12px;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
-  font-size: 0.95em;
+  font-size: 0.8em;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -202,7 +227,6 @@ button {
   color: #333333;
 }
 
-/* Minimalist analyze button - removed gradient, simplified styling */
 .analyze-btn {
   background: #333333;
   color: #ffffff;
@@ -228,96 +252,94 @@ button {
 .results-section {
   background: #fafafa;
   border-radius: 4px;
-  padding: 20px;
-  min-height: 150px;
-  line-height: 1.8;
+  padding: 12px;
+  flex: 1;
+  line-height: 1.5;
   word-wrap: break-word;
   border: 1px solid #f0f0f0;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .results-title {
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: #333333;
-  font-size: 0.95em;
+  font-size: 0.85em;
+  flex-shrink: 0;
 }
 
 .entity {
   display: inline-block;
-  padding: 3px 6px;
-  margin: 2px;
+  padding: 2px 4px;
+  margin: 1px;
   border-radius: 3px;
   font-weight: 500;
-  font-size: 0.95em;
+  font-size: 0.85em;
 }
 
-/* === ENTITY STYLES - Minimalist version === */
-/* 1. Triệu chứng bệnh (Vàng) */
 .entity-trieu_chung_benh {
   background-color: #fff9c4;
   border: 1px solid #fbc02d;
   color: #333;
 }
 
-/* 2. Tên bệnh (Xanh lá) */
 .entity-ten_benh {
-  background-color: #0fe916;
+  background-color: #c8e6c9;
   border: 1px solid #34cc40;
   color: #1b5e20;
 }
 
-/* 3. Nguyên nhân bệnh (Xanh dương) */
 .entity-nguyen_nhan_benh {
-  background-color: #0e89ec;
+  background-color: #bbdefb;
   border: 1px solid #1976d2;
   color: #0d47a1;
 }
 
-/* 4. Biện pháp chẩn đoán (Tím) */
 .entity-bien_phap_chan_doan {
-  background-color: #c314e2;
+  background-color: #e1bee7;
   border: 1px solid #7b1fa2;
   color: #4a148c;
 }
 
-/* 5. Biện pháp điều trị (Hồng) */
 .entity-bien_phap_dieu_tri {
-  background-color: #f30256;
+  background-color: #f8bbd0;
   border: 1px solid #c2185b;
   color: #880e4f;
 }
 
-/* === LEGEND === */
-/* Minimalist legend - removed shadow, simplified styling */
+/* Compact legend with reduced padding and font sizes */
 .legend {
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  padding: 30px;
+  padding: 12px;
+  flex-shrink: 0;
 }
 
 .legend-title {
-  font-size: 1.1em;
+  font-size: 0.9em;
   color: #333333;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
 .legend-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  font-size: 0.8em;
 }
 
 .legend-color {
-  width: 28px;
-  height: 18px;
+  width: 20px;
+  height: 14px;
   border-radius: 2px;
   flex-shrink: 0;
 }
@@ -326,39 +348,49 @@ button {
   text-align: center;
   color: #999999;
   font-style: italic;
-  font-size: 0.95em;
+  font-size: 0.85em;
 }
 
-@media (max-width: 968px) {
+@media (max-width: 1400px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+
   .models-container {
     grid-template-columns: 1fr;
+  }
+
+  .legend-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: auto;
+  }
+
+  h1 {
+    font-size: 1em;
   }
 
   .legend-grid {
     grid-template-columns: 1fr;
   }
 
-  h1 {
-    font-size: 1.6em;
-  }
-
   .pets-container {
-    bottom: 20px;
-    right: 20px;
-    gap: 15px;
+    bottom: 12px;
+    right: 12px;
+    gap: 8px;
   }
 
   .pet-monkey {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
   }
 
   .pet-header {
-    width: 40px;
-    height: 40px;
-  }
-
-  .header-content {
-    gap: 15px;
+    width: 30px;
+    height: 30px;
   }
 }
