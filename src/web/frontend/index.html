@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical NER Tool - PhoBERT vs CRF</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Medical NER Tool - ViHealthBERT vs CRF</title> <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -13,18 +12,14 @@
                 <h1>Nhận diện thực thể trong lĩnh vực y tế</h1>
                 <svg class="pet pet-header" viewBox="0 0 100 100" onclick="togglePet(this)">
                     <circle cx="50" cy="50" r="35" fill="#f5f5f5" stroke="#333" stroke-width="2"/>
-                    <!-- Ears -->
                     <circle cx="30" cy="25" r="12" fill="#333"/>
                     <circle cx="70" cy="25" r="12" fill="#333"/>
-                    <!-- Eyes -->
                     <circle cx="40" cy="45" r="6" fill="#333"/>
                     <circle cx="60" cy="45" r="6" fill="#333"/>
-                    <!-- Nose -->
                     <circle cx="50" cy="55" r="4" fill="#333"/>
                 </svg>
             </div>
-            <p class="subtitle">So sánh PhoBERT (Deep Learning) và CRF (Machine Learning)</p>
-        </header>
+             <p class="subtitle">So sánh ViHealthBERT (Deep Learning) và CRF (Machine Learning)</p> </header>
 
         <div class="model-card" style="margin-bottom: 30px;">
             <div class="model-header">
@@ -42,16 +37,13 @@
         <div class="models-container">
             <div class="model-card">
                 <div class="model-header">
-                    <div class="model-title">PhoBERT</div>
+                    <div class="model-title">ViHealthBERT</div>
                     <div class="model-badge">Deep Learning</div>
                 </div>
                 <div class="button-group">
-                    <button class="analyze-btn" onclick="analyzeText('linear')">Phân tích (Linear)</button>
-                </div>
-                <div class="results-section" id="results-linear">
-                    <div class="results-title">Kết quả phân tích:</div>
-                    <div id="output-linear" class="loading">Nhấn "Phân tích" để xem kết quả...</div>
-                </div>
+                    <button class="analyze-btn" onclick="analyzeText('vihealthbert')">Phân tích (ViHealthBERT)</button> </div>
+                <div class="results-section" id="results-vihealthbert"> <div class="results-title">Kết quả phân tích:</div>
+                    <div id="output-vihealthbert" class="loading">Nhấn "Phân tích" để xem kết quả...</div> </div>
             </div>
 
             <div class="model-card">
@@ -73,24 +65,19 @@
             <div class="legend-title">Chú thích các loại thực thể</div>
             <div class="legend-grid">
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #f9e002; border: 1px solid #fbc02d;"></div>
-                    <span>Triệu chứng bệnh</span>
+                    <div class="legend-color" style="background-color: #fff9c4; border: 1px solid #fbc02d;"></div> <span>Triệu chứng bệnh</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #05f50d; border: 1px solid #34cc40;"></div>
-                    <span>Tên bệnh</span>
+                    <div class="legend-color" style="background-color: #c8e6c9; border: 1px solid #34cc40;"></div> <span>Tên bệnh</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #0486f1; border: 1px solid #1976d2;"></div>
-                    <span>Nguyên nhân bệnh</span>
+                    <div class="legend-color" style="background-color: #bbdefb; border: 1px solid #1976d2;"></div> <span>Nguyên nhân bệnh</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #d706fc; border: 1px solid #7b1fa2;"></div>
-                    <span>Biện pháp chẩn đoán</span>
+                    <div class="legend-color" style="background-color: #e1bee7; border: 1px solid #7b1fa2;"></div> <span>Biện pháp chẩn đoán</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background-color: #f4075a; border: 1px solid #c2185b;"></div>
-                    <span>Biện pháp điều trị</span>
+                    <div class="legend-color" style="background-color: #f8bbd0; border: 1px solid #c2185b;"></div> <span>Biện pháp điều trị</span>
                 </div>
             </div>
         </div>
@@ -99,34 +86,25 @@
     <div class="pets-container">
         <svg class="pet pet-monkey" viewBox="0 0 100 100" onclick="togglePet(this)">
             <circle cx="50" cy="50" r="35" fill="#d4a574" stroke="#333" stroke-width="2"/>
-            <!-- Ears -->
             <circle cx="30" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
             <circle cx="70" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
-            <!-- Eyes -->
             <circle cx="40" cy="45" r="5" fill="#333"/>
             <circle cx="60" cy="45" r="5" fill="#333"/>
-            <!-- Nose -->
             <circle cx="50" cy="55" r="3" fill="#333"/>
-            <!-- Smile -->
             <path d="M 45 60 Q 50 63 55 60" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
         <svg class="pet pet-monkey" viewBox="0 0 100 100" onclick="togglePet(this)">
             <circle cx="50" cy="50" r="35" fill="#d4a574" stroke="#333" stroke-width="2"/>
-            <!-- Ears -->
             <circle cx="30" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
             <circle cx="70" cy="25" r="10" fill="#d4a574" stroke="#333" stroke-width="1.5"/>
-            <!-- Eyes -->
             <circle cx="40" cy="45" r="5" fill="#333"/>
             <circle cx="60" cy="45" r="5" fill="#333"/>
-            <!-- Nose -->
             <circle cx="50" cy="55" r="3" fill="#333"/>
-            <!-- Smile -->
             <path d="M 45 60 Q 50 63 55 60" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
     </div>
 
     <script>
-        // API URL không đổi
         const API_URL = 'http://127.0.0.1:8001';
 
         function togglePet(petElement) {
@@ -134,9 +112,9 @@
         }
 
         async function analyzeText(modelType) {
-            const input = document.getElementById('input-shared'); 
+            const input = document.getElementById('input-shared');
             const text = input.value.trim();
-            const output = document.getElementById(`output-${modelType}`); 
+            const output = document.getElementById(`output-${modelType}`); // Get correct output element
 
             if (!text) {
                 alert("⚠️ Vui lòng nhập văn bản vào ô 'Nhập văn bản' bên trên.");
@@ -144,99 +122,117 @@
                 return;
             }
 
-            // Xác định endpoint để gọi
             let endpoint = '';
-            if (modelType === 'linear') {
-                endpoint = '/analyze-linear';
+            // Changed 'linear' to 'vihealthbert' and updated endpoint
+            if (modelType === 'vihealthbert') {
+                endpoint = '/analyze-vihealthbert';
             } else if (modelType === 'crf') {
-                endpoint = '/analyze-crf'; // <-- GỌI ENDPOINT MỚI
+                endpoint = '/analyze-crf';
             } else {
-                return; // Không làm gì nếu modelType lạ
+                return;
             }
 
             output.innerHTML = '<div class="loading">⏳ Đang phân tích...</div>';
-            
+
             try {
-                const response = await fetch(API_URL + endpoint, { // <-- Dùng endpoint linh hoạt
+                const response = await fetch(API_URL + endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: text }), 
+                    body: JSON.stringify({ text: text }),
                 });
 
+                // Get JSON regardless of response.ok to handle potential error messages
+                const results = await response.json();
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.detail || `Lỗi từ server: ${response.statusText}`);
+                    // Use error message from JSON if available, otherwise use statusText
+                    throw new Error(results.error || results.detail || `Lỗi từ server: ${response.statusText}`);
                 }
 
-                const results = await response.json(); 
-                renderResults(results, output); // Hàm renderResults dùng chung cho cả 2
+                renderResults(results, output);
 
             } catch (error){
                 console.error(`Lỗi khi gọi API (${modelType}):`, error);
-                output.innerHTML = `<div class="loading">❌ Lỗi: Không thể kết nối tới máy chủ AI. (${error.message})</div>`;
+                // Display the actual error message
+                output.innerHTML = `<div class="loading">❌ Lỗi: ${error.message}</div>`;
             }
         }
 
-        // Hàm renderResults không thay đổi, nó hoạt động cho cả 2
         function renderResults(results, outputElement) {
-            if (!results || results.length === 0 || results.error) {
-                // ... (code giữ nguyên)
-                outputElement.innerHTML = '<div class="loading">Không tìm thấy thực thể.</div>';
-                if(results.error) {
-                    outputElement.innerHTML = `<div class="loading">❌ Lỗi từ server: ${results.error}</div>`;
-                }
+            // Check if results indicate an error from the server (handled better now)
+             if (results && results.error) {
+                 outputElement.innerHTML = `<div class="loading">❌ Lỗi từ server: ${results.error}</div>`;
+                 return;
+             }
+            if (!results || !Array.isArray(results) || results.length === 0) { // Ensure results is an array
+                outputElement.innerHTML = '<div class="loading">Không tìm thấy thực thể hoặc kết quả không hợp lệ.</div>';
                 return;
             }
+
             let html = '';
-            let currentTag = null; 
+            let currentTagType = null; // Store only the type (e.g., ten_benh)
+
             for (const [word, tag] of results) {
-                // ... (code giữ nguyên)
-                const wordWithSpace = word + " "; 
-                if (tag === 'O') {
-                    if (currentTag) {
-                        html += '</span>';
-                        currentTag = null;
+                const wordWithSpace = word + " ";
+                let tagPrefix = 'O';
+                let tagType = 'O'; // Default to 'O'
+
+                 // Correctly parse B-/I- tags or just type tags
+                 if (tag && tag !== 'O') {
+                     if (tag.startsWith('B-')) {
+                         tagPrefix = 'B';
+                         tagType = tag.substring(2);
+                     } else if (tag.startsWith('I-')) {
+                         tagPrefix = 'I';
+                         tagType = tag.substring(2);
+                     } else {
+                         // Assume tag is just the type, treat as B-
+                         tagPrefix = 'B';
+                         tagType = tag;
+                     }
+                 }
+
+
+                if (tagPrefix === 'O') {
+                    if (currentTagType) {
+                        html += '</span>'; // Close previous entity span
+                        currentTagType = null;
                     }
-                    html += wordWithSpace; 
-                } else {
-                    // Kiểm tra tag hợp lệ (tránh lỗi B- hoặc I- đứng một mình)
-                    if (tag.indexOf('-') === -1) {
-                         html += wordWithSpace; // Coi như là 'O'
-                         continue;
+                    html += wordWithSpace;
+                } else if (tagPrefix === 'B') {
+                    if (currentTagType) {
+                        html += '</span>'; // Close previous entity span
                     }
-                    const tagType = tag.split('-')[1]; 
-                    const tagPrefix = tag.split('-')[0]; 
-                    if (tagPrefix === 'B') {
-                        if (currentTag) {
-                            html += '</span>';
+                    // Use the extracted tagType for the class
+                    html += `<span class="entity entity-${tagType}">` + wordWithSpace;
+                    currentTagType = tagType; // Update current type
+                } else if (tagPrefix === 'I') {
+                    if (currentTagType === tagType) {
+                        // Continue the current span
+                        html += wordWithSpace;
+                    } else {
+                        // If I- tag doesn't match current span, treat it as a new B- tag
+                        if (currentTagType) {
+                            html += '</span>'; // Close previous entity span
                         }
                         html += `<span class="entity entity-${tagType}">` + wordWithSpace;
-                        currentTag = tagType;
-                    } else if (tagPrefix === 'I') {
-                        if (currentTag === tagType) {
-                            html += wordWithSpace;
-                        } else {
-                            if (currentTag) {
-                                html += '</span>';
-                            }
-                            html += `<span class="entity entity-${tagType}">` + wordWithSpace;
-                            currentTag = tagType;
-                        }
+                        currentTagType = tagType; // Start new type
                     }
                 }
             }
-            if (currentTag) {
-                html += '</span>';
+
+            if (currentTagType) {
+                html += '</span>'; // Close the last span if it was an entity
             }
-            outputElement.innerHTML = html.trim(); 
+            outputElement.innerHTML = html.trim();
         }
 
-        // Hàm clearAll không thay đổi
         function clearAll() {
             document.getElementById('input-shared').value = '';
-            document.getElementById('output-linear').innerHTML = 
+            // Changed ID from 'output-linear' to 'output-vihealthbert'
+            document.getElementById('output-vihealthbert').innerHTML =
                 '<div class="loading">Nhấn "Phân tích" để xem kết quả...</div>';
-            document.getElementById('output-crf').innerHTML = 
+            document.getElementById('output-crf').innerHTML =
                 '<div class="loading">Nhấn "Phân tích" để xem kết quả...</div>';
         }
     </script>
